@@ -16,7 +16,7 @@
                     <div class="panel panel-default" style="width: 500px">
                         <div class="panel-heading">Login Page</div>
                         <div class="panel-body">
-                            <form role="form" action="/j_spring_security_check">
+                            <form role="form" action="j_spring_security_check" method="POST">
                                 <div class="form-group">
                                     <label for="username">Username</label>
                                     <input type="text" name="username" class="form-control" id="username" placeholder="Username">
