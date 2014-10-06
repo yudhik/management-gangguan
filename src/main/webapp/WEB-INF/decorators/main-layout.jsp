@@ -2,15 +2,14 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="App">
 <head>
   <meta charset="utf-8">
   <title>Management Gangguan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
-        rel="stylesheet"  type="text/css" />
+  <link href="<c:url value="/resources/css/bootstrap.min.css"/> " rel="stylesheet"  type="text/css" />
   <link href="<c:url value="/resources/css/main.css" />"
         rel="stylesheet"  type="text/css" />
 
@@ -29,14 +28,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-2">
-                  <div class="well sidebar-nav">
+                  <div class="sidebar-nav">
                     <c:import url="/WEB-INF/views/tags/menu.jsp"/>
                   </div>
                 </div>
 
                 <div class="col-md-10">
-                    <div class="jumbotron">
-                      <c:import url="/WEB-INF/views/tags/banner.jsp"/>
+                    <div class="jumbotron" ng-view>
+
                     </div>
 
                     <div class="row">
@@ -63,10 +62,15 @@
 
     <c:import url="/WEB-INF/views/tags/footer.jsp"/>
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery.min.js"/> "></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js"/> "></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js"/> "></script>
     <script type="text/javascript" src="<c:url value="/resources/js/demo.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/json2.js" />"></script>
-  <script type="text/javascript" src="<c:url value="/resources/js/date.format.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/date.format.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/angular.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/angular-resource.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/angular-route.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/AngularSetting/App.js"/> "></script>
 </body>
 </html>
