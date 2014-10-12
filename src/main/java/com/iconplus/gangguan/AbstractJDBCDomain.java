@@ -1,4 +1,4 @@
-package com.iconplus.gangguan.domain;
+package com.iconplus.gangguan;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;

@@ -20,9 +20,9 @@ import com.iconplus.gangguan.repository.RoleRepository;
 import com.iconplus.gangguan.repository.UserRepository;
 
 @Service("loginAuthenticationService")
-public class LoginAuthenticationService implements UserDetailsService {
+public class LoginAuthenticationServiceBean implements UserDetailsService {
 
-  private static final Logger LOG = LoggerFactory.getLogger(LoginAuthenticationService.class);
+  private static final Logger LOG = LoggerFactory.getLogger(LoginAuthenticationServiceBean.class);
 
   @Inject
   private UserRepository userRepository;

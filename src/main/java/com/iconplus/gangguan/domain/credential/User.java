@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.iconplus.gangguan.domain.AbstractJDBCDomain;
+import com.iconplus.gangguan.AbstractJDBCDomain;
 
 public class User extends AbstractJDBCDomain {
 

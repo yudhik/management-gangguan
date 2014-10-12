@@ -1,14 +1,29 @@
-package com.iconplus.gangguan.domain.credential;
+package com.iconplus.gangguan.domain;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.iconplus.gangguan.domain.AbstractJDBCDomain;
+import org.springframework.jdbc.core.RowMapper;
+
+import com.iconplus.gangguan.AbstractJDBCDomain;
 
 public class ApplicationMenu extends AbstractJDBCDomain {
 
   private static final long serialVersionUID = -2969264271953895482L;
   public static final String TABLE_NAME = "MGT_APP_MENUS";
+
+  public static RowMapper<ApplicationMenu> getRowMapper() {
+    return new RowMapper<ApplicationMenu>() {
+      @Override
+      public ApplicationMenu mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return new ApplicationMenu(rs.getString("id"), rs.getString("parent"),
+            rs.getString("label"), rs.getString("relative_url"));
+      }
+    };
+  }
+
   private String id;
   private String parent;
   private String label;

@@ -13,6 +13,7 @@
 		<form-login login-page='/login.jsp'
 			authentication-failure-url="/login.jsp?error=true"
 			username-parameter="username" password-parameter="password"
+			always-use-default-target="true"
 			default-target-url="/view/home/" />
 	</http>
 

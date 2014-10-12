@@ -17,9 +17,16 @@ public class RoleRepository {
   private static final String FIND_BY_USERNAME = "SELECT * FROM " + UserRole.TABLE_NAME
       + " WHERE username = ?";
   private static final String FIND_BY_ID = "SELECT * FROM " + Role.TABLE_NAME + " WHERE id = ?";
+  private static final String FIND_ROLE_BY_NAME = "SELECT * FROM " + Role.TABLE_NAME
+      + " WHERE name = ?";
 
   @Inject
   private JdbcTemplate jdbcTemplate;
+
+  public Role findRoleByName(String roleName) {
+    return jdbcTemplate.queryForObject(FIND_ROLE_BY_NAME, new Object[] {roleName},
+        Role.getRowMapper());
+  }
 
   public List<Role> findRoleByUsername(String username) {
     List<Role> roles = new ArrayList<Role>();
