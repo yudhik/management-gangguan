@@ -42,12 +42,12 @@ public abstract class AbstractJDBCDomain implements Serializable, CrudOperation 
     Map<String, String> fieldToDatabaseColumnMap = getDatabaseDomainFieldMap();
     int index = 0;
     for (Field field : fields) {
-      String fieldName = fieldToDatabaseColumnMap.get(field.getName());
+      String databaseFieldName = fieldToDatabaseColumnMap.get(field.getName());
       LOG.info("field name : {}", field.getName());
-      if (!StringUtils.isEmpty(fieldToDatabaseColumnMap.get(fieldName))) {
-        LOG.info("found mapping for {} with value {}", new Object[] {fieldName,
-            fieldToDatabaseColumnMap.get(fieldName)});
-        allFieldsBuilder.append(fieldToDatabaseColumnMap.get(fieldName));
+      if (!StringUtils.isEmpty(databaseFieldName)) {
+        LOG.info("found mapping for {} with value {}", new Object[] {field.getName(),
+            databaseFieldName});
+        allFieldsBuilder.append(databaseFieldName);
         allValuesBuilder.append(QUESTION_CHARACTER);
         if (index < (fieldToDatabaseColumnMap.size() - 1)) {
           allFieldsBuilder.append(DELIMITER);
@@ -55,7 +55,7 @@ public abstract class AbstractJDBCDomain implements Serializable, CrudOperation 
         }
         index++;
       } else {
-        LOG.info("ignoring field : {}", fieldName);
+        LOG.info("ignoring field : {}", field.getName());
       }
     }
     return INSERT_STATEMENT_TEMPLATE.replace(TABLE_NAME_KEY, getTableName())
@@ -71,19 +71,18 @@ public abstract class AbstractJDBCDomain implements Serializable, CrudOperation 
     fieldToDatabaseColumnMap.remove(getPrimaryKeyField());
     int index = 0;
     for (Field field : fields) {
-      String fieldName = fieldToDatabaseColumnMap.get(field.getName());
+      String databaseFieldName = fieldToDatabaseColumnMap.get(field.getName());
       LOG.info("field name : {}", field.getName());
-      if (!StringUtils.isEmpty(fieldToDatabaseColumnMap.get(fieldName))) {
-        LOG.info("found mapping for {} with value {}", new Object[] {fieldName,
-            fieldToDatabaseColumnMap.get(fieldName)});
-        allFieldsBuilder.append(fieldToDatabaseColumnMap.get(fieldName)).append(
-            EQUAL_QUESTION_CHARACTER);
+      if (!StringUtils.isEmpty(databaseFieldName)) {
+        LOG.info("found mapping for {} with value {}", new Object[] {field.getName(),
+            databaseFieldName});
+        allFieldsBuilder.append(databaseFieldName).append(EQUAL_QUESTION_CHARACTER);
         if (index < (fieldToDatabaseColumnMap.size() - 1)) {
           allFieldsBuilder.append(DELIMITER);
         }
         index++;
       } else {
-        LOG.info("ignoring field : {}", fieldName);
+        LOG.info("ignoring field : {}", databaseFieldName);
       }
     }
     return UPDATE_STATEMENT_TEMPLATE.replace(TABLE_NAME_KEY, getTableName())

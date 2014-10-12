@@ -1,12 +1,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div class="container">
-	<form:form role="form" action="/view/administration/menu/" method="post" modelAttribute="availableMenu">
+	<!-- TODO : change "/management-gangguan" with basePath filter -->
+	<form:form role="form" action="/management-gangguan/view/administration/menu/form" method="post" modelAttribute="availableMenu">
 		<div class="form-group">
-			<form:label for="menuLabel">Menu Label</form:label>
+			<label for="menuLabel">Menu Label</label>
 			<form:input path="label" type="text" class="form-control" id="menuLabel" placeholder="masukan label menu" />
 		</div>
 		<div class="form-group">
-			<form:label for="relativeUrl">URL</form:label>
+			<label for="relativeUrl">URL</label>
 			<form:input path="url" type="text" class="form-control" id="relativeUrl" placeholder="masukan url" />
 		</div>
 		

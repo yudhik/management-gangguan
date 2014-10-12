@@ -34,12 +34,16 @@
                 </div>
 
                 <div class="col-md-10">
+                <!--  
                     <div class="jumbotron" ng-view>
 
                     </div>
+                -->
 
                     <div class="row">
+                    
                       <div class="col-md-12">
+                      	<!-- 
                           <div class="container">
                             <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=priyatam&repo=springmvc-twitterbootstrap-showcase&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
 
@@ -49,6 +53,7 @@
 
                         <hr class="soften">
 
+                      	 -->
                         <decorator:body />
 
                       </div>

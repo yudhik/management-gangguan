@@ -29,6 +29,7 @@ public class ApplicationMenuRepository {
   private static final String FIND_ALL_MENU = "SELECT * FROM " + ApplicationMenu.TABLE_NAME;
   private static final String FIND_ALL_MENU_WITH_RELATED_ID = FIND_ALL_MENU
       + " WHERE id = ? or parent = ?";
+  private static final String FIND_ALL_MENU_WITH_ID = FIND_ALL_MENU + " WHERE id = ?";
 
 
   public void delete(ApplicationMenu applicationMenu) {
@@ -67,6 +68,11 @@ public class ApplicationMenuRepository {
       }
     }
     return availableMenu;
+  }
+
+  public ApplicationMenu findById(String id) {
+    return getJdbcTemplate().queryForObject(FIND_ALL_MENU_WITH_ID, new Object[] {id},
+        ApplicationMenu.class);
   }
 
   public JdbcTemplate getJdbcTemplate() {

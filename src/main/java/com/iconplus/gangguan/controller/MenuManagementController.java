@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,14 +29,15 @@ public class MenuManagementController {
   private static final String SUMMARY = "/summary";
   private static final String FORM = "/form";
   private static final String UPDATE = "/update/{id}";
+  private static final String[] IGNORED_AVAILABLE_MENU_FIELDS = new String[] {"childMenu"};
 
   private static final ObjectMapper MAPPER = new ObjectMapper();
 
   public static final String BASE_PATH = "/view/administration/menu";
-  public static final String SUMMARY_PATH = BASE_PATH + SUMMARY;
-  public static final String FORM_PATH = BASE_PATH + FORM;
-  public static final String DETAIL_PATH = BASE_PATH + DETAIL;
-  public static final String UPDATE_PATH = BASE_PATH + UPDATE;
+  public static final String SUMMARY_PATH = "/administration/menu" + SUMMARY;
+  public static final String FORM_PATH = "/administration/menu" + FORM;
+  public static final String DETAIL_PATH = "/administration/menu" + DETAIL;
+  public static final String UPDATE_PATH = "/administration/menu" + UPDATE;
 
   @Inject
   private ApplicationMenuService applicationMenuService;
@@ -61,8 +64,22 @@ public class MenuManagementController {
   @RequestMapping(value = FORM, method = RequestMethod.POST)
   public String submitMenuForm(@ModelAttribute AvailableMenu availableMenu, Model model)
       throws Exception {
-    applicationMenuService.saveApplicationMenu(new ApplicationMenu(DomainHelper
-        .generateUUIDString(), null, availableMenu.getLabel(), availableMenu.getUrl()));
-    return SUMMARY_PATH;
+    try {
+      applicationMenuService.saveApplicationMenu(new ApplicationMenu(DomainHelper
+          .generateUUIDString(), null, availableMenu.getLabel(), availableMenu.getUrl()));
+    } catch (Exception e) {
+      model.addAttribute("errorMessage", e.getMessage());
+      return FORM_PATH;
+    }
+    return "redirect:" + SUMMARY.replace("/", "");
+  }
+
+  @RequestMapping(value = DETAIL, method = RequestMethod.POST)
+  public String viewMenuDetail(@PathVariable("id") String id, Model model) throws Exception {
+    ApplicationMenu applicationMenu = applicationMenuService.getApplicationMenuById(id);
+    AvailableMenu availableMenu = new AvailableMenu();
+    BeanUtils.copyProperties(applicationMenu, availableMenu, IGNORED_AVAILABLE_MENU_FIELDS);
+    model.addAttribute("availableMenu", availableMenu);
+    return DETAIL_PATH;
   }
 }

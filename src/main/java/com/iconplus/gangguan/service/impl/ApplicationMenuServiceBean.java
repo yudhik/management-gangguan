@@ -35,6 +35,11 @@ public class ApplicationMenuServiceBean implements ApplicationMenuService {
   }
 
   @Override
+  public ApplicationMenu getApplicationMenuById(String id) {
+    return repository.findById(id);
+  }
+
+  @Override
   public List<ApplicationMenu> getAvailableMenuForRole(List<String> roles) throws Exception {
     return repository.findAvailableMenuForRole(roles);
   }

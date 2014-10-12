@@ -12,6 +12,8 @@ public interface ApplicationMenuService {
 
   public List<ApplicationMenu> getApplicationMenu(Integer page, Integer size);
 
+  public ApplicationMenu getApplicationMenuById(String id);
+
   public List<ApplicationMenu> getAvailableMenuForRole(List<String> roles) throws Exception;
 
   public void saveApplicationMenu(ApplicationMenu applicationMenu) throws Exception;
