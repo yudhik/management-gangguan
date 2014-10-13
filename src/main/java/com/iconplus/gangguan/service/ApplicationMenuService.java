@@ -14,6 +14,8 @@ public interface ApplicationMenuService {
 
   public ApplicationMenu getApplicationMenuById(String id);
 
+  public List<ApplicationMenu> getApplicationMenuChildrenFor(ApplicationMenu applicationMenu);
+
   public List<ApplicationMenu> getAvailableMenuForRole(List<String> roles) throws Exception;
 
   public void saveApplicationMenu(ApplicationMenu applicationMenu) throws Exception;

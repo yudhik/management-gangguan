@@ -9,18 +9,21 @@ public class AvailableMenu implements Serializable {
 
   private String id;
   private String label;
-  private String url;
+  private String relativeUrl;
   private List<AvailableMenu> childMenu;
+  private String parent;
 
   public AvailableMenu() {
     // nothing to do here
   }
 
-  public AvailableMenu(String id, String label, String url, List<AvailableMenu> childMenu) {
+  public AvailableMenu(String id, String label, String relativeUrl, List<AvailableMenu> childMenu,
+      String parent) {
     this.id = id;
     this.label = label;
-    this.url = url;
+    this.relativeUrl = relativeUrl;
     this.childMenu = childMenu;
+    this.parent = parent;
   }
 
   @Override
@@ -52,8 +55,12 @@ public class AvailableMenu implements Serializable {
     return label;
   }
 
-  public String getUrl() {
-    return url;
+  public String getParent() {
+    return parent;
+  }
+
+  public String getRelativeUrl() {
+    return relativeUrl;
   }
 
   @Override
@@ -76,7 +83,11 @@ public class AvailableMenu implements Serializable {
     this.label = label;
   }
 
-  public void setUrl(String url) {
-    this.url = url;
+  public void setParent(String parent) {
+    this.parent = parent;
+  }
+
+  public void setRelativeUrl(String relativeUrl) {
+    this.relativeUrl = relativeUrl;
   }
 }

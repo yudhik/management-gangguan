@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,7 @@ public class MenuManagementController {
   @RequestMapping(value = FORM, method = RequestMethod.GET)
   public String getMenuForm(Model model) throws Exception {
     model.addAttribute("availableMenu", new AvailableMenu());
+    model.addAttribute("parents", applicationMenuService.getApplicationMenu());
     return FORM_PATH;
   }
 
@@ -55,9 +57,10 @@ public class MenuManagementController {
     // TODO : change getAvailableMenu using pagination when database server is decided
     for (ApplicationMenu menu : applicationMenuService.getApplicationMenu()) {
       availableMenus.add(new AvailableMenu(menu.getId(), menu.getLabel(), menu.getRelativeUrl(),
-          null));
+          null, null));
     }
-    model.addAttribute("availableMenus", MAPPER.writeValueAsString(availableMenus));
+    model.addAttribute("availableMenus", availableMenus);
+    model.addAttribute("availableMenuJson", MAPPER.writeValueAsString(availableMenus));
     return SUMMARY_PATH;
   }
 
@@ -66,7 +69,8 @@ public class MenuManagementController {
       throws Exception {
     try {
       applicationMenuService.saveApplicationMenu(new ApplicationMenu(DomainHelper
-          .generateUUIDString(), null, availableMenu.getLabel(), availableMenu.getUrl()));
+          .generateUUIDString(), StringUtils.isEmpty(availableMenu.getParent()) ? null
+          : availableMenu.getParent(), availableMenu.getLabel(), availableMenu.getRelativeUrl()));
     } catch (Exception e) {
       model.addAttribute("errorMessage", e.getMessage());
       return FORM_PATH;
@@ -74,12 +78,23 @@ public class MenuManagementController {
     return "redirect:" + SUMMARY.replace("/", "");
   }
 
-  @RequestMapping(value = DETAIL, method = RequestMethod.POST)
+  @RequestMapping(value = DETAIL, method = RequestMethod.GET)
   public String viewMenuDetail(@PathVariable("id") String id, Model model) throws Exception {
     ApplicationMenu applicationMenu = applicationMenuService.getApplicationMenuById(id);
     AvailableMenu availableMenu = new AvailableMenu();
     BeanUtils.copyProperties(applicationMenu, availableMenu, IGNORED_AVAILABLE_MENU_FIELDS);
+    List<ApplicationMenu> applicationMenuChildren =
+        applicationMenuService.getApplicationMenuChildrenFor(applicationMenu);
+    if (applicationMenuChildren != null) {
+      List<AvailableMenu> childMenus = new ArrayList<AvailableMenu>();
+      for (ApplicationMenu menu : applicationMenuChildren) {
+        AvailableMenu child = new AvailableMenu();
+        BeanUtils.copyProperties(menu, child, IGNORED_AVAILABLE_MENU_FIELDS);
+        childMenus.add(child);
+      }
+      availableMenu.setChildMenu(childMenus);
+    }
     model.addAttribute("availableMenu", availableMenu);
-    return DETAIL_PATH;
+    return DETAIL_PATH.replace("/{id}", "");
   }
 }

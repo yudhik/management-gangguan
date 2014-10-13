@@ -51,17 +51,17 @@ public class HomeController {
     for (ApplicationMenu applicationMenu : applicationMenus) {
       if (applicationMenu.getParent() == null) {
         availableMenus.add(new AvailableMenu(applicationMenu.getId(), applicationMenu.getLabel(),
-            applicationMenu.getRelativeUrl(), null));
+            applicationMenu.getRelativeUrl(), null, null));
       } else {
         if (applicationMenuChilds.get(applicationMenu.getParent()) == null) {
           List<AvailableMenu> childs = new ArrayList<AvailableMenu>();
           childs.add(new AvailableMenu(applicationMenu.getId(), applicationMenu.getLabel(),
-              applicationMenu.getRelativeUrl(), null));
+              applicationMenu.getRelativeUrl(), null, null));
           applicationMenuChilds.put(applicationMenu.getParent(), childs);
         } else {
           applicationMenuChilds.get(applicationMenu.getParent()).add(
               new AvailableMenu(applicationMenu.getId(), applicationMenu.getLabel(),
-                  applicationMenu.getRelativeUrl(), null));
+                  applicationMenu.getRelativeUrl(), null, null));
         }
       }
     }

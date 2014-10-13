@@ -40,6 +40,11 @@ public class ApplicationMenuServiceBean implements ApplicationMenuService {
   }
 
   @Override
+  public List<ApplicationMenu> getApplicationMenuChildrenFor(ApplicationMenu applicationMenu) {
+    return repository.findMenuChildrens(applicationMenu.getId());
+  }
+
+  @Override
   public List<ApplicationMenu> getAvailableMenuForRole(List<String> roles) throws Exception {
     return repository.findAvailableMenuForRole(roles);
   }
